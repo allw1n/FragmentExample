@@ -44,6 +44,10 @@ public class SimpleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null && getArguments().containsKey(CHECKED)) {
+            checkedRadio = getArguments().getInt(CHECKED);
+        }
     }
 
     @Override
@@ -56,13 +60,10 @@ public class SimpleFragment extends Fragment {
 
         final AppCompatTextView textView = rootView.findViewById(R.id.fragment_header);
 
-        if (getArguments() != null && getArguments().containsKey(CHECKED)) {
-            checkedRadio = getArguments().getInt(CHECKED);
-            if (checkedRadio != NONE) {
-                radioGroup.check(radioGroup.getChildAt(checkedRadio).getId());
-                if (checkedRadio == 0) textView.setText(R.string.yes_message);
-                else textView.setText(R.string.no_message);
-            }
+        if (checkedRadio != NONE) {
+            radioGroup.check(radioGroup.getChildAt(checkedRadio).getId());
+            if (checkedRadio == 0) textView.setText(R.string.yes_message);
+            else textView.setText(R.string.no_message);
         }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
